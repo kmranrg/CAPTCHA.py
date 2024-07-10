@@ -2,13 +2,17 @@ from PIL import Image, ImageDraw, ImageFont
 import random
 import string
 
-def generate_text_captcha(text, width=150, height=50, font_path='Lobster-Regular.ttf'):
+def generate_text_captcha(text, width=150, height=50, font_path='Anurag-Regular.ttf'):
     # Create an image with white background
     image = Image.new('RGB', (width, height), 'white')
     draw = ImageDraw.Draw(image)
     
     # Choose a handwritten font and size
-    font = ImageFont.truetype(font_path, 36)
+    try:
+        font = ImageFont.truetype(font_path, 40)
+    except OSError:
+        print(f"Error: Cannot open font resource {font_path}. Using default font.")
+        font = ImageFont.load_default()
     
     # Calculate text size and position
     text_bbox = draw.textbbox((0, 0), text, font=font)
@@ -40,13 +44,17 @@ def generate_text_captcha(text, width=150, height=50, font_path='Lobster-Regular
 def random_string(length=6):
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
 
-def generate_math_captcha(math_problem, width=150, height=50, font_path='Lobster-Regular.ttf'):
+def generate_math_captcha(math_problem, width=150, height=50, font_path='Anurag-Regular.ttf'):
     # Create an image with white background
     image = Image.new('RGB', (width, height), 'white')
     draw = ImageDraw.Draw(image)
     
     # Choose a handwritten font and size
-    font = ImageFont.truetype(font_path, 36)
+    try:
+        font = ImageFont.truetype(font_path, 37)
+    except OSError:
+        print(f"Error: Cannot open font resource {font_path}. Using default font.")
+        font = ImageFont.load_default()
     
     # Calculate text size and position
     text_bbox = draw.textbbox((0, 0), math_problem, font=font)
@@ -76,8 +84,8 @@ def generate_math_captcha(math_problem, width=150, height=50, font_path='Lobster
     return image.convert('RGB')
 
 def random_math_problem():
-    num1 = random.randint(1, 10)
-    num2 = random.randint(1, 10)
+    num1 = random.randint(10, 10)
+    num2 = random.randint(10, 10)
     return f'{num1} + {num2} = ?', num1 + num2
 
 def generate_captcha(captcha_type='text'):
