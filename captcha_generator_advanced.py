@@ -84,8 +84,8 @@ def generate_math_captcha(math_problem, width=150, height=50, font_path='Anurag-
     return image.convert('RGB')
 
 def random_math_problem():
-    num1 = random.randint(10, 10)
-    num2 = random.randint(10, 10)
+    num1 = random.randint(1, 10)
+    num2 = random.randint(1, 10)
     return f'{num1} + {num2} = ?', num1 + num2
 
 def generate_captcha(captcha_type='text'):
